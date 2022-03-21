@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
@@ -38,7 +39,7 @@ class ListPullRequestFragment : Fragment() {
     }
 
     private fun getPullRequestResponse() {
-        viewModel.getPullRequests(args.userName,args.repository)
+        viewModel.getPullRequests(args.userName, args.repository)
     }
 
 
@@ -49,11 +50,20 @@ class ListPullRequestFragment : Fragment() {
             adapter = repositoryAdapter
         }
 
-        viewModel.pullRequestList.observe(viewLifecycleOwner){
+        viewModel.pullRequestList.observe(viewLifecycleOwner) {
             repositoryAdapter.pullRequestList.addAll(it)
+
             if (repositoryAdapter.itemCount == 0) {
+                _binding?.pbLoading?.visibility = View.INVISIBLE
+
+                _binding?.errorMessage?.visibility = View.VISIBLE
+                Toast.makeText(context, "No items", Toast.LENGTH_LONG).show()
+
                 Log.e("Pull Request", "No pulls found for this Repository")
+
             } else {
+                _binding?.pbLoading?.visibility = View.INVISIBLE
+
                 Log.e("Pull Request", "cheio")
             }
             repositoryAdapter.notifyDataSetChanged()
