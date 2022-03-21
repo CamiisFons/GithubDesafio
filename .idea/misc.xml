@@ -13,8 +13,8 @@
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.33489583333333334" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2125644288774068" />
         <entry key="app/src/main/res/layout/activity_repository.xml" value="0.31875" />
-        <entry key="app/src/main/res/layout/fragment_list_pull_request.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_list_repository.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_list_pull_request.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_list_repository.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_pull_request.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/item_repository.xml" value="0.31875" />
       </map>

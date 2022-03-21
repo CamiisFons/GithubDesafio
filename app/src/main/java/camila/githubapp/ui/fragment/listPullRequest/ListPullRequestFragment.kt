@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import camila.githubapp.databinding.FragmentListPullRequestBinding
 import camila.githubapp.ui.adapter.ListPullRequestAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.appcompat.app.AppCompatActivity
+
 
 @AndroidEntryPoint
 class ListPullRequestFragment : Fragment() {
@@ -30,6 +31,7 @@ class ListPullRequestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = FragmentListPullRequestBinding.inflate(inflater, container, false).apply {
+        (activity as AppCompatActivity).supportActionBar?.title = args.repository
         _binding = this
     }.root
 
