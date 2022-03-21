@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import camila.githubapp.databinding.ItemRepositoryBinding
 import camila.githubapp.model.Repository
-import coil.load
+import com.bumptech.glide.Glide
 
 class RepositoryListAdapter(private val onClick: (Repository) -> Unit) :
     PagingDataAdapter<Repository, RepositoryListAdapter.RepositoryListViewHolder>(
@@ -57,9 +57,13 @@ class RepositoryListAdapter(private val onClick: (Repository) -> Unit) :
             repositoryName.text = item.name
             fullName.text = item.full_name
             description.text = item.description
-            ivAvatar.load(item.owner.avatar_url)
+            Glide.with(ivAvatar)
+                .load(item.owner.avatar_url)
+                .circleCrop()
+                .into(ivAvatar)
             cardView.setOnClickListener {
-                onClick(item) }
+                onClick(item)
+            }
         }
     }
 }
