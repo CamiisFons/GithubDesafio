@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listRepositoryFragment"
-        android:name="camila.githubapp.ui.ListRepositoryFragment"
+        android:name="camila.githubapp.ui.fragment.listRepository.ListRepositoryFragment"
         android:label="Github JavaPop"
         tools:layout="@layout/fragment_list_repository">
 
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/listPullRequestFragment"
-        android:name="camila.githubapp.ui.ListPullRequestFragment"
+        android:name="camila.githubapp.ui.fragment.listPullRequest.ListPullRequestFragment"
         android:label="ListPullRequestFragment"
         tools:layout="@layout/fragment_list_pull_request">
 

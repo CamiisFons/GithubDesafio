@@ -1,4 +1,4 @@
-package camila.githubapp.ui
+package camila.githubapp.ui.fragment.listPullRequest
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

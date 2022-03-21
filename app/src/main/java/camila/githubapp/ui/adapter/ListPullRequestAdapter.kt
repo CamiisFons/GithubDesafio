@@ -47,6 +47,9 @@ class ListPullRequestAdapter(val pullRequestList: MutableList<PullRequest>) :
                 .load(pullRequest.user.avatar_url)
                 .circleCrop()
                 .into(ivAvatar)
+            cardView.setOnClickListener {
+                //onClick(pullRequest)
+            }
 
         }
 

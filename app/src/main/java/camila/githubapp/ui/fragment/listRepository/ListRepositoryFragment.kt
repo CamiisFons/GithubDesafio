@@ -1,4 +1,4 @@
-package camila.githubapp.ui
+package camila.githubapp.ui.fragment.listRepository
 
 import android.os.Bundle
 import android.view.LayoutInflater
