@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_repository"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="24dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/photo_user"
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="5dp"
+                app:srcCompat="@drawable/ic_person" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/photo_user"
+                android:layout_alignStart="@+id/photo_user"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="-7dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="0dp"
+                android:text="@string/username"
+                android:textAlignment="center"
+                android:textColor="@color/purple_700"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/full_name"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:layout_alignStart="@+id/username"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="-11dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="0dp"
+                android:text="@string/full_name"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/star"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_below="@+id/description_repository"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="28dp"
+                android:layout_toEndOf="@+id/fork_qnty"
+                app:srcCompat="@drawable/ic_star" />
+
+            <TextView
+                android:id="@+id/star_qnty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/description_repository"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/star"
+                android:text="@string/qnty_of_star"
+                android:textColor="#E6AC3F"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fork_qnty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/description_repository"
+                android:layout_marginTop="24dp"
+                android:layout_toEndOf="@+id/fork"
+                android:text="@string/qnty_of_fork"
+                android:textColor="#E6AC3F"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/repository_name"
+                android:layout_width="223dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/repository_name"
+                android:textColor="@color/purple_700"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description_repository"
+                android:layout_width="226dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/repository_name"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="6dp"
+                android:maxLines="3"
+                android:text="@string/description"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/fork"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_below="@+id/description_repository"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:backgroundTint="@color/purple_700"
+                app:srcCompat="@drawable/ic_fork" />
+
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.cardview.widget.CardView>

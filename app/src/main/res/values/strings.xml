@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Desafio Android</string>
+    <string name="repo_title">Github JavaPop</string>
+    <string name="titulo_do_pull_request">Titulo do Pull Request</string>
+    <string name="descri_o_pull_request">descrição pull request</string>
+    <string name="username">username</string>
+    <string name="nome_completo">Nome Completo</string>
+    <string name="date">XXX/XX/XX</string>
+    <string name="qnty_of_fork">12354</string>
+    <string name="description">Descrição do repositorio lorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilumlorem ipsilum</string>
+    <string name="repository_name">Nome Repositório</string>
+    <string name="qnty_of_star">501</string>
+    <string name="full_name">Nome Completo</string>
+    <string name="username_pull">username</string>
+</resources>

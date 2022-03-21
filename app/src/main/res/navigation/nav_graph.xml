@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listRepositoryFragment">
+
+    <fragment
+        android:id="@+id/listRepositoryFragment"
+        android:name="camila.githubapp.ui.ListRepositoryFragment"
+        android:label="Github JavaPop"
+        tools:layout="@layout/fragment_list_repository">
+
+        <action
+            android:id="@+id/action_listRepositoryFragment_to_listPullRequestFragment"
+            app:destination="@id/listPullRequestFragment"
+            app:popUpTo="@id/listPullRequestFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/listPullRequestFragment"
+        android:name="camila.githubapp.ui.ListPullRequestFragment"
+        android:label="ListPullRequestFragment"
+        tools:layout="@layout/fragment_list_pull_request">
+
+        <argument
+            android:name="repository"
+            app:argType="string" />
+        <argument
+            android:name="userName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
