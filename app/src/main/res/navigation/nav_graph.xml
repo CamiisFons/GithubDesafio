@@ -33,14 +33,19 @@
         <action
             android:id="@+id/action_listPullRequestFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"
         android:name="camila.githubapp.ui.fragment.webView.WebViewFragment"
         android:label="WebViewFragment" >
         <argument
-            android:name="pullRequest"
-            app:argType="camila.githubapp.model.PullRequest" />
+            android:name="urlPull"
+            app:argType="string" />
+        <argument
+            android:name="pullName"
+            app:argType="string" />
+
     </fragment>
 
 </navigation>

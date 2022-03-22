@@ -10,8 +10,11 @@ import camila.githubapp.databinding.ItemPullRequestBinding
 import camila.githubapp.model.PullRequest
 import com.bumptech.glide.Glide
 
-class ListPullRequestAdapter(val pullRequestList: MutableList<PullRequest>) :
+class ListPullRequestAdapter(private val onClick: (PullRequest)-> Unit
+) :
     RecyclerView.Adapter<ListPullRequestAdapter.ListPullRequestViewHolder>() {
+
+    var pullList: ArrayList<PullRequest> = ArrayList();
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPullRequestViewHolder {
@@ -25,7 +28,7 @@ class ListPullRequestAdapter(val pullRequestList: MutableList<PullRequest>) :
     }
 
     override fun onBindViewHolder(holder: ListPullRequestViewHolder, position: Int) {
-        holder.bindingPull(this.pullRequestList[position])
+        holder.bindingPull(pullList[position])
     }
 
     inner class ListPullRequestViewHolder(itemPullRequestBinding: ItemPullRequestBinding) :
@@ -48,14 +51,14 @@ class ListPullRequestAdapter(val pullRequestList: MutableList<PullRequest>) :
                 .circleCrop()
                 .into(ivAvatar)
             cardView.setOnClickListener {
-                //onClick(pullRequest)
+                onClick.invoke(pullRequest)
             }
 
         }
 
     }
 
-    override fun getItemCount() = pullRequestList.size
+    override fun getItemCount() = pullList.size
 
 }
 

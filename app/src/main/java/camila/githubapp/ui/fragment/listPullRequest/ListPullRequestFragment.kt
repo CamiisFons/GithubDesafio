@@ -1,5 +1,6 @@
 package camila.githubapp.ui.fragment.listPullRequest
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,16 +15,19 @@ import camila.githubapp.databinding.FragmentListPullRequestBinding
 import camila.githubapp.ui.adapter.ListPullRequestAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
+import camila.githubapp.ui.adapter.RepositoryListAdapter
+import camila.githubapp.ui.fragment.listRepository.ListRepositoryFragmentDirections
 
 
 @AndroidEntryPoint
 class ListPullRequestFragment : Fragment() {
 
+
     private var _binding: FragmentListPullRequestBinding? = null
     private val binding: FragmentListPullRequestBinding get() = _binding ?: throw Exception("")
 
     private val viewModel: ListPullRequestViewModel by viewModels()
-    private val listPullRequestAdapter: ListPullRequestAdapter = ListPullRequestAdapter(ArrayList())
 
     private val args by navArgs<ListPullRequestFragmentArgs>()
 
@@ -46,22 +50,23 @@ class ListPullRequestFragment : Fragment() {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
 
-//        val pullAdapter = ListPullRequestAdapter {
-//            val action = ListRepositoryFragmentDirections.actionListRepositoryFragmentToListPullRequestFragment(it.name, it.owner.login)
-//            findNavController().navigate(action)
-//        }
+        val adapterPull = ListPullRequestAdapter {
+            val action = ListPullRequestFragmentDirections.actionListPullRequestFragmentToWebViewFragment(it.html_url, it.title)
+            findNavController().navigate(action)
+        }
 
         binding.pullRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = listPullRequestAdapter
+            adapter = adapterPull
         }
 
         viewModel.pullRequestList.observe(viewLifecycleOwner) {
-            listPullRequestAdapter.pullRequestList.addAll(it)
+            adapterPull.pullList.addAll(it)
 
-            if (listPullRequestAdapter.itemCount == 0) {
+            if (adapterPull.itemCount == 0) {
                 _binding?.pbLoading?.visibility = View.INVISIBLE
 
                 _binding?.errorMessage?.visibility = View.VISIBLE
@@ -74,15 +79,17 @@ class ListPullRequestFragment : Fragment() {
 
                 Log.e("Pull Request", "cheio")
             }
-            listPullRequestAdapter.notifyDataSetChanged()
+
+            adapterPull.notifyDataSetChanged()
+
         }
     }
+
 
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
 
 }
