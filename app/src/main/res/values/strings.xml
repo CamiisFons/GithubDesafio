@@ -13,5 +13,7 @@
     <string name="full_name">Nome Completo</string>
     <string name="username_pull">username</string>
     <string name="no_pulls_found">No pulls found for this Repository</string>
+    <string name="error">Something went wrong, try again in a few minutes</string>
+
 
 </resources>

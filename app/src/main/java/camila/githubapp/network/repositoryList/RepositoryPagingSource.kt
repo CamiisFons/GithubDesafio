@@ -35,35 +35,3 @@ class RepositoryPagingSource(private val service: GithubAPI) : PagingSource<Int,
     }
 
 }
-
-
-//override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Repository> {
-
-//        return try {
-//            val currentPage = params.key ?: GITHUB_STARTING_PAGE_INDEX
-//            val response = service.getRepositories(currentPage)
-//            val data = response.body()?.items ?: emptyList()
-//            val responseData = mutableListOf<Repository>()
-//            responseData.addAll(data)
-//
-//            LoadResult.Page(
-//                data = responseData,
-//                prevKey = if (currentPage == GITHUB_STARTING_PAGE_INDEX) null else - 1,
-//                nextKey = currentPage.plus(GITHUB_STARTING_PAGE_INDEX),
-//            )
-//
-//        } catch (exception: IOException) {
-//            return LoadResult.Error(exception)
-//        } catch (exception: HttpException) {
-//            return LoadResult.Error(exception)
-//        }
-//    }
-//
-//    override fun getRefreshKey(state: PagingState<Int, Repository>): Int? {
-//        return state.anchorPosition?.let { anchorPosition ->
-//            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-//                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-//        }
-//    }
-
-//}

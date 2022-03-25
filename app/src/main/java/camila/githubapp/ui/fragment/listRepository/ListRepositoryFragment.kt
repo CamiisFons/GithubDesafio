@@ -29,7 +29,7 @@ class ListRepositoryFragment : Fragment() {
     private val snackbar: Snackbar by lazy {
         Snackbar.make(
             binding.root,
-            R.string.app_name,
+            R.string.error,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
             setAction("ok") { requireActivity().finish() }
@@ -51,10 +51,7 @@ class ListRepositoryFragment : Fragment() {
 
     private fun initRecyclerView() {
 
-        val adapterRepo = RepositoryListAdapter {
-            val action = ListRepositoryFragmentDirections.actionListRepositoryFragmentToListPullRequestFragment(it.name, it.owner.login)
-            findNavController().navigate(action)
-        }
+        val adapterRepo = onClick()
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.repositoryList.collectLatest {
@@ -79,6 +76,17 @@ class ListRepositoryFragment : Fragment() {
                     is LoadState.Error -> snackbar.show()
                 }
             }
+        }
+    }
+
+    private fun onClick(): RepositoryListAdapter {
+        return RepositoryListAdapter {
+            val action =
+                ListRepositoryFragmentDirections.actionListRepositoryFragmentToListPullRequestFragment(
+                    it.name,
+                    it.owner.login
+                )
+            findNavController().navigate(action)
         }
     }
 

@@ -1,8 +1,6 @@
 package camila.githubapp.ui.fragment.listPullRequest
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +13,9 @@ import camila.githubapp.databinding.FragmentListPullRequestBinding
 import camila.githubapp.ui.adapter.ListPullRequestAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.findNavController
-import camila.githubapp.ui.adapter.RepositoryListAdapter
-import camila.githubapp.ui.fragment.listRepository.ListRepositoryFragmentDirections
-
+import androidx.lifecycle.Observer
+import camila.githubapp.R
+import com.google.android.material.snackbar.Snackbar
 
 @AndroidEntryPoint
 class ListPullRequestFragment : Fragment() {
@@ -28,8 +25,19 @@ class ListPullRequestFragment : Fragment() {
     private val binding: FragmentListPullRequestBinding get() = _binding ?: throw Exception("")
 
     private val viewModel: ListPullRequestViewModel by viewModels()
+    private val pullAdapter: ListPullRequestAdapter = ListPullRequestAdapter()
 
     private val args by navArgs<ListPullRequestFragmentArgs>()
+
+    private val snackbar: Snackbar by lazy {
+        Snackbar.make(
+            binding.root,
+            R.string.error,
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            setAction("ok") { requireActivity().finish() }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +51,7 @@ class ListPullRequestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getPullRequestResponse()
         initRecyclerView()
+        observePullRequestList()
     }
 
     private fun getPullRequestResponse() {
@@ -50,41 +59,36 @@ class ListPullRequestFragment : Fragment() {
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initRecyclerView() {
-
-        val adapterPull = ListPullRequestAdapter {
-            val action = ListPullRequestFragmentDirections.actionListPullRequestFragmentToWebViewFragment(it.html_url, it.title)
-            findNavController().navigate(action)
-        }
 
         binding.pullRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = adapterPull
+            adapter = pullAdapter
         }
+    }
 
-        viewModel.pullRequestList.observe(viewLifecycleOwner) {
-            adapterPull.pullList.addAll(it)
+    private fun observePullRequestList() {
+        viewModel.pullRequestList.observe(this, Observer {
+            pullAdapter.pullRequest = it
+            pullAdapter.notifyItemChanged(it.size)
 
-            if (adapterPull.itemCount == 0) {
+            if (pullAdapter.itemCount == 0) {
                 _binding?.pbLoading?.visibility = View.INVISIBLE
 
                 _binding?.errorMessage?.visibility = View.VISIBLE
-                Toast.makeText(context, "No items", Toast.LENGTH_LONG).show()
-
-                Log.e("Pull Request", "No pulls found for this Repository")
+                Toast.makeText(context, "No pull request found", Toast.LENGTH_LONG).show()
 
             } else {
                 _binding?.pbLoading?.visibility = View.INVISIBLE
 
-                Log.e("Pull Request", "cheio")
             }
 
-            adapterPull.notifyDataSetChanged()
+        })
 
-        }
+        viewModel.error.observe(this, {
+            snackbar.show()
+        })
     }
-
 
 
     override fun onDestroy() {

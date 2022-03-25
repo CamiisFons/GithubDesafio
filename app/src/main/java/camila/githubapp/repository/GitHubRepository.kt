@@ -12,10 +12,11 @@ import javax.inject.Inject
 
 class GitHubRepository @Inject constructor(private val api: GithubAPI) {
 
-    fun getRepositoriesList(): Flow<PagingData<Repository>> =
-        Pager(PagingConfig(1)) {
+    fun getRepositoriesList(): Flow<PagingData<Repository>> {
+        return Pager(PagingConfig(1)) {
             RepositoryPagingSource(api)
         }.flow
+    }
 
     suspend fun getPullRequestList(owner: String, repository: String): List<PullRequest> =
         api.pullRequestList(owner, repository)

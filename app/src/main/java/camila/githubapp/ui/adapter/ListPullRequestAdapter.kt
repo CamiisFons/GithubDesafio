@@ -2,20 +2,36 @@ package camila.githubapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import camila.githubapp.databinding.ItemPullRequestBinding
 import camila.githubapp.model.PullRequest
+import camila.githubapp.ui.fragment.listPullRequest.ListPullRequestFragmentDirections
 import com.bumptech.glide.Glide
 
-class ListPullRequestAdapter(private val onClick: (PullRequest)-> Unit
-) :
+class ListPullRequestAdapter :
     RecyclerView.Adapter<ListPullRequestAdapter.ListPullRequestViewHolder>() {
 
-    var pullList: ArrayList<PullRequest> = ArrayList();
+    inner class ListPullRequestViewHolder(val itemPullRequestBinding: ItemPullRequestBinding) :
+        RecyclerView.ViewHolder(itemPullRequestBinding.root)
 
+    private val differCallback = object : DiffUtil.ItemCallback<PullRequest>() {
+        override fun areItemsTheSame(oldItem: PullRequest, newItem: PullRequest): Boolean {
+            return oldItem.title == newItem.title
+        }
+
+        override fun areContentsTheSame(oldItem: PullRequest, newItem: PullRequest): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    var pullRequest: List<PullRequest>
+        get() = differ.currentList
+        set(value) = differ.submitList(value)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListPullRequestViewHolder {
         return ListPullRequestViewHolder(
@@ -27,38 +43,28 @@ class ListPullRequestAdapter(private val onClick: (PullRequest)-> Unit
         )
     }
 
+    override fun getItemCount() = pullRequest.size
+
     override fun onBindViewHolder(holder: ListPullRequestViewHolder, position: Int) {
-        holder.bindingPull(pullList[position])
-    }
-
-    inner class ListPullRequestViewHolder(itemPullRequestBinding: ItemPullRequestBinding) :
-        RecyclerView.ViewHolder(itemPullRequestBinding.root) {
-
-        private val pullTitle: TextView = itemPullRequestBinding.pullTitle
-        private val pullDescription: TextView = itemPullRequestBinding.pullDescription
-        private val pullUsername: TextView = itemPullRequestBinding.pullUsername
-        private val pullName: TextView = itemPullRequestBinding.pullName
-        private val cardView: CardView = itemPullRequestBinding.cardPull
-        private val ivAvatar: ImageView = itemPullRequestBinding.photoUser
-
-        fun bindingPull(pullRequest: PullRequest) {
+        val pullRequest = pullRequest[position]
+        holder.itemPullRequestBinding.apply {
             pullTitle.text = pullRequest.title
             pullDescription.text = pullRequest.body
             pullUsername.text = pullRequest.user.login
             pullName.text = pullRequest.user.login + pullRequest.title
-            Glide.with(ivAvatar)
+            Glide.with(photoUser)
                 .load(pullRequest.user.avatar_url)
                 .circleCrop()
-                .into(ivAvatar)
-            cardView.setOnClickListener {
-                onClick.invoke(pullRequest)
+                .into(photoUser)
+            cardPull.setOnClickListener { view ->
+                val action =
+                    ListPullRequestFragmentDirections.actionListPullRequestFragmentToWebViewFragment(
+                        pullRequest.html_url,
+                        pullRequest.title
+                    )
+                view.findNavController().navigate(action)
             }
 
         }
-
     }
-
-    override fun getItemCount() = pullList.size
-
 }
-
